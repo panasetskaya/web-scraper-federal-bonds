@@ -19,7 +19,7 @@ url = f"https://smart-lab.ru/q/ofz/order_by_mat_years/desc/?mat_years_gt={min_ye
 
 headers = {"user agent": ""
           ""
-          ""} #user agent here
+          ""} # YOUR USER AGENT HERE
 
 html = requests.get(url, headers)
 
