@@ -97,3 +97,8 @@ for m in ofz_url_list:
 
 import pprint
 pprint.pprint(ofz_dictionary)
+
+import pandas as pd
+
+pd.DataFrame(ofz_dictionary).fillna('').to_csv('ofz.csv')
+print("Saved to: ofz.csv")
