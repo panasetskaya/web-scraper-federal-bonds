@@ -6,6 +6,10 @@ Created on Fri Sep 10 22:57:24 2021
 """
 import requests
 from bs4 import BeautifulSoup
+import re
+from datetime import datetime
+import pprint
+import pandas as pd
 
 min_years = float(input("What's the minimum maturity period? (ex.: 2.5)"))
 max_years = float(input("What's the maximum maturity period? (ex.: 3.5)"))
@@ -16,21 +20,13 @@ print()
 
 url = f"https://smart-lab.ru/q/ofz/order_by_mat_years/desc/?mat_years_gt={min_years}&mat_years_lt={max_years}"
 
-
 headers = {"user agent": ""
           ""
           ""} # YOUR USER AGENT HERE
-
 html = requests.get(url, headers)
-
 soup = BeautifulSoup(html.content, 'html.parser')
-
 text = str(soup.get_text()) 
-
 ofz_list = [] #chosen bonds' names
-
-import re
-
 index = [m.start() for m in re.finditer('ОФЗ', text)]
 
 for i in tuple(index):
@@ -56,7 +52,6 @@ def new_url_list():
         
 ofz_url_list = new_url_list()
 
-from datetime import datetime
 now = datetime.now()
 
 ofz_dictionary = {}
@@ -95,10 +90,7 @@ for m in ofz_url_list:
     
     ofz_dictionary.update({ofz_name:this_ofz_dict})
 
-import pprint
 pprint.pprint(ofz_dictionary)
-
-import pandas as pd
 
 pd.DataFrame(ofz_dictionary).fillna('').to_csv('ofz.csv')
 print("Saved to: ofz.csv")
